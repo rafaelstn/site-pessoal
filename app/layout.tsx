@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Rafael Damasceno — Automação com IA",
   description:
     "Especialista em automação e inteligência artificial aplicada a negócios. Construo sistemas inteligentes que economizam tempo e reduzem custos.",
+  icons: {
+    icon: "/preto e roxo.png",
+  },
   openGraph: {
     title: "Rafael Damasceno — Automação com IA",
     description:
