@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { CyberneticGridShader } from '@/components/ui/cybernetic-grid-shader';
 
 interface OceanHeroProps {
   className?: string;
@@ -19,6 +20,7 @@ export function OceanHero({ className, children }: OceanHeroProps) {
       role="banner"
       aria-label="Hero section"
     >
+      <CyberneticGridShader />
       <div className="relative z-10 w-full">{children}</div>
     </section>
   );
