@@ -15,7 +15,9 @@ export function CTAFinal() {
     empresa: "",
     email: "",
     problema: "",
+    website: "", // honeypot
   });
+  const [submitTime] = useState(() => Date.now());
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -38,18 +40,31 @@ export function CTAFinal() {
     e.preventDefault();
     if (!validate()) return;
 
+    // Honeypot: se preencheu o campo invisível, é bot
+    if (form.website) {
+      setStatus("success");
+      return;
+    }
+
+    // Tempo mínimo: se preencheu em menos de 3s, é bot
+    if (Date.now() - submitTime < 3000) {
+      setStatus("success");
+      return;
+    }
+
     setStatus("loading");
 
     try {
+      const { website: _, ...data } = form;
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       });
 
       if (res.ok) {
         setStatus("success");
-        setForm({ nome: "", empresa: "", email: "", problema: "" });
+        setForm({ nome: "", empresa: "", email: "", problema: "", website: "" });
       } else {
         setStatus("error");
       }
@@ -137,6 +152,18 @@ export function CTAFinal() {
             <h3 className="text-white text-base font-medium mb-5">
               Ou deixe seus dados
             </h3>
+
+            {/* Honeypot — invisível pra humanos, bots preenchem */}
+            <input
+              type="text"
+              name="website"
+              value={form.website}
+              onChange={(e) => handleChange("website", e.target.value)}
+              className="absolute opacity-0 h-0 w-0 -z-10"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
 
             {status === "success" ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
