@@ -23,7 +23,7 @@ export function Footer() {
             GitHub
           </a>
           <a
-            href="mailto:rafaeldamasceno64@gmail.com"
+            href="mailto:contato@rafaeldamasceno.dev"
             className="text-ink-subtle text-sm hover:text-white transition-colors py-2"
           >
             Email
