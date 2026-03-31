@@ -1,96 +1,74 @@
 "use client";
 
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { motion } from "framer-motion";
 
 const problems = [
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-        />
-      </svg>
-    ),
-    label: "Atendimento",
-    text: "Clientes mandam mensagem fora do horário e não recebem resposta. Você perde venda sem nem saber.",
+    number: "01",
+    title: "Atendimento parado",
+    text: "Seu time responde as mesmas 10 perguntas todo dia. Esse tempo vai embora, o cliente espera, e você paga por isso.",
   },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
-    ),
-    label: "Operação",
-    text: "Sua equipe gasta horas em tarefas repetitivas que poderiam ser automatizadas. Tempo desperdiçado todo dia.",
+    number: "02",
+    title: "Processos quebrados",
+    text: "Planilha no WhatsApp, dado duplicado no sistema, aprovação parada há dois dias. Você sabe que existe um jeito melhor.",
+    offset: true,
   },
   {
-    icon: (
-      <svg
-        className="w-6 h-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-        />
-      </svg>
-    ),
-    label: "Dados",
-    text: "Você tem informação espalhada em planilhas, sistemas e WhatsApp. Ninguém sabe o que está acontecendo de verdade.",
+    number: "03",
+    title: "Escala frágil",
+    text: "Quando o volume aumenta, o que quebra primeiro são as partes que ainda dependem de uma pessoa fazendo na mão.",
   },
 ];
 
 export function Problema() {
   return (
-    <section className="py-28 md:py-36 bg-ink">
-      <div className="container-main">
-        <AnimatedSection className="mb-16 md:mb-20">
-          <h2 className="font-display text-4xl md:text-5xl font-light text-white leading-tight max-w-2xl">
-            Seu negócio está perdendo{" "}
-            <em className="not-italic text-red-400">dinheiro agora.</em>
-          </h2>
-        </AnimatedSection>
+    <section className="relative py-28 md:py-36 bg-surface bg-grain">
+      {/* Glow quente no canto */}
+      <div
+        className="absolute top-0 right-0 w-[400px] h-[300px] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at 100% 0%, rgba(196,151,74,0.05) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      <div className="container-main relative z-10">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-14 md:mb-20 max-w-[550px]"
+        >
+          Quanto custa{" "}
+          <span className="text-warm">não automatizar?</span>
+        </motion.h2>
+
+        {/* Grid assimétrico */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr_1fr] gap-4 md:gap-8">
           {problems.map((p, i) => (
-            <AnimatedSection key={p.label} delay={i * 0.12}>
-              <div className="flex flex-col gap-5 p-8 border border-white/10 rounded-2xl hover:border-white/20 transition-colors duration-300">
-                <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-white/70">
-                  {p.icon}
-                </div>
-                <span className="text-xs font-body font-medium text-white/40 tracking-widest uppercase">
-                  {p.label}
-                </span>
-                <p className="font-body text-base text-white/70 leading-relaxed">
-                  {p.text}
-                </p>
-              </div>
-            </AnimatedSection>
+            <motion.div
+              key={p.number}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className={`border-t border-white/[0.1] pt-7 pb-10 ${
+                p.offset ? "md:mt-12" : ""
+              }`}
+            >
+              <span className="font-mono text-xs text-ink-faint block mb-4">
+                {p.number}
+              </span>
+              <h3 className="text-white text-lg font-medium mb-3">
+                {p.title}
+              </h3>
+              <p className="text-ink-muted text-[15px] leading-relaxed">
+                {p.text}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>

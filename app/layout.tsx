@@ -4,14 +4,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Rafael Damasceno — Automação com IA",
   description:
-    "Especialista em automação e inteligência artificial aplicada a negócios. Construo sistemas inteligentes que economizam tempo e reduzem custos.",
+    "Trabalho manual é caro. IA resolve isso. Automações, chatbots e integrações que liberam seu time das tarefas repetitivas.",
   icons: {
     icon: "/preto e roxo.png",
   },
   openGraph: {
     title: "Rafael Damasceno — Automação com IA",
     description:
-      "Construo sistemas inteligentes que economizam tempo, reduzem custos e fazem sua operação funcionar enquanto você dorme.",
+      "Trabalho manual é caro. IA resolve isso. Automações, chatbots e integrações que fazem seu negócio funcionar 24h.",
     type: "website",
   },
 };

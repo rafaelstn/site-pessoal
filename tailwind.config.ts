@@ -11,15 +11,26 @@ const config: Config = {
       fontFamily: {
         display: ["Fraunces", "serif"],
         body: ["Plus Jakarta Sans", "sans-serif"],
+        mono: ["DM Mono", "monospace"],
       },
       colors: {
         accent: {
-          DEFAULT: "#1E3A5F",
-          light: "#2A5298",
-          muted: "#4A6FA5",
+          DEFAULT: "#22c55e",
+          dark: "#16a34a",
         },
-        surface: "#FAFAFA",
-        ink: "#111111",
+        warm: "#C4974A",
+        surface: {
+          DEFAULT: "#0a0a0f",
+          light: "#0b0b10",
+          lighter: "#08080d",
+        },
+        ink: {
+          DEFAULT: "#ffffff",
+          muted: "#b0bec5",
+          subtle: "#8a9bb0",
+          faint: "#6b7f96",
+          ghost: "#56687d",
+        },
       },
       maxWidth: {
         container: "1120px",

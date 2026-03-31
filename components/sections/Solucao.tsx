@@ -1,92 +1,82 @@
 "use client";
 
-import { AnimatedSection } from "@/components/ui/AnimatedSection";
+import { motion } from "framer-motion";
 
-const pillars = [
+const services = [
   {
     number: "01",
-    title: "Agentes de Atendimento",
+    title: "Chatbots e Agentes",
     description:
-      "Sistemas que respondem, qualificam e encaminham clientes automaticamente — 24h por dia, sem custo de equipe.",
+      "Atendimento que funciona de madrugada, no domingo, no feriado. Responde, qualifica lead e escala pro humano só quando precisa.",
     whatsapp:
-      "https://wa.me/5511985529546?text=Ol%C3%A1%20Rafael%2C%20tenho%20interesse%20em%20saber%20mais%20sobre%20Agentes%20de%20Atendimento%20com%20IA.",
+      "https://wa.me/5511985529546?text=Ol%C3%A1%20Rafael%2C%20tenho%20interesse%20em%20saber%20mais%20sobre%20Chatbots%20e%20Agentes%20de%20IA.",
   },
   {
     number: "02",
-    title: "Automação de Processos",
+    title: "Automações",
     description:
-      "Elimino tarefas manuais e repetitivas da sua operação. Sua equipe foca no que realmente importa.",
+      "Conecto seus sistemas e elimino o trabalho que existe só porque as ferramentas não conversam entre si.",
     whatsapp:
       "https://wa.me/5511985529546?text=Ol%C3%A1%20Rafael%2C%20tenho%20interesse%20em%20saber%20mais%20sobre%20Automa%C3%A7%C3%A3o%20de%20Processos.",
   },
   {
     number: "03",
-    title: "Integrações Inteligentes",
+    title: "Integrações com IA",
     description:
-      "Conecto seus sistemas, dados e ferramentas. Tudo funcionando junto, sem retrabalho.",
+      "IA integrada ao seu processo real. Não um chatbot genérico, mas algo treinado no seu contexto e nas suas regras.",
     whatsapp:
-      "https://wa.me/5511985529546?text=Ol%C3%A1%20Rafael%2C%20tenho%20interesse%20em%20saber%20mais%20sobre%20Integra%C3%A7%C3%B5es%20Inteligentes.",
+      "https://wa.me/5511985529546?text=Ol%C3%A1%20Rafael%2C%20tenho%20interesse%20em%20saber%20mais%20sobre%20Integra%C3%A7%C3%B5es%20com%20IA.",
   },
 ];
 
 export function Solucao() {
   return (
-    <section className="py-28 md:py-36 bg-surface">
+    <section className="py-28 md:py-36 bg-surface-lighter bg-grain">
       <div className="container-main">
-        {/* Header */}
-        <AnimatedSection className="mb-20 md:mb-24 max-w-2xl">
-          <p className="text-xs font-body font-medium text-accent tracking-widest uppercase mb-5">
-            O que faço
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl font-light text-ink leading-tight mb-5">
-            Automação que funciona{" "}
-            <em className="not-italic">de verdade.</em>
-          </h2>
-          <p className="font-body text-lg text-ink/55 leading-relaxed">
-            Não vendo tecnologia. Resolvo problemas específicos com IA aplicada
-            ao seu negócio.
-          </p>
-        </AnimatedSection>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-14 md:mb-20"
+        >
+          O que eu faço
+        </motion.h2>
 
-        {/* Pillars */}
-        <div className="flex flex-col gap-0 divide-y divide-ink/10">
-          {pillars.map((pillar, i) => (
-            <AnimatedSection key={pillar.number} delay={i * 0.1}>
-              <a
-                href={pillar.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col md:flex-row md:items-center gap-6 md:gap-16 py-10 hover:bg-slate-50/80 transition-colors duration-300 -mx-6 md:-mx-10 lg:-mx-16 px-6 md:px-10 lg:px-16 rounded-xl block"
-              >
-                <span className="font-display text-5xl font-light text-accent/20 group-hover:text-accent/40 transition-colors duration-300 w-16 shrink-0">
-                  {pillar.number}
-                </span>
-                <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-16 flex-1">
-                  <h3 className="font-display text-2xl md:text-3xl font-light text-ink md:w-72 shrink-0">
-                    {pillar.title}
+        <div className="flex flex-col">
+          {services.map((service, i) => (
+            <motion.a
+              key={service.number}
+              href={service.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="group border-t border-white/[0.08] py-8 md:py-10 pl-6 flex items-start justify-between gap-6 border-l-2 border-l-transparent hover:border-l-accent hover:pl-8 transition-all duration-300"
+            >
+              <div>
+                <div className="flex items-baseline gap-5 mb-3">
+                  <span className="font-mono text-sm text-ink-faint">
+                    {service.number}
+                  </span>
+                  <h3 className="text-white text-xl md:text-2xl font-medium">
+                    {service.title}
                   </h3>
-                  <p className="font-body text-base text-ink/55 leading-relaxed max-w-lg">
-                    {pillar.description}
-                  </p>
                 </div>
-                <svg
-                  className="w-5 h-5 text-ink/20 group-hover:text-accent/60 group-hover:translate-x-1 transition-all duration-300 hidden md:block shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M17 8l4 4m0 0l-4 4m4-4H3"
-                  />
-                </svg>
-              </a>
-            </AnimatedSection>
+                <p className="text-ink-muted text-[15px] md:text-base leading-relaxed pl-10 md:pl-12 max-w-2xl">
+                  {service.description}
+                </p>
+              </div>
+              <span className="text-ink-subtle text-2xl shrink-0 mt-2 group-hover:text-accent group-hover:translate-x-1 transition-all duration-300 hidden md:block">
+                →
+              </span>
+            </motion.a>
           ))}
+          <div className="border-t border-white/[0.08]" />
         </div>
+
       </div>
     </section>
   );

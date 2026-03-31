@@ -50,19 +50,19 @@ export function CyberneticGridShader() {
         vec2 gridUv = abs(fract(uv * 12.0) - 0.5);
         float line  = pow(1.0 - min(gridUv.x, gridUv.y), 60.0);
 
-        // cor accent navy: #1E3A5F = vec3(0.118, 0.227, 0.373)
-        vec3 gridColor = vec3(0.118, 0.227, 0.373);
+        // cor accent verde: #22c55e = vec3(0.133, 0.773, 0.369)
+        vec3 gridColor = vec3(0.133, 0.773, 0.369);
         float pulse    = 0.5 + sin(t * 1.5) * 0.15;
         vec3 color     = gridColor * line * pulse;
 
-        // pulsos de energia — accent-light #2A5298
+        // pulsos de energia — verde mais claro
         float energy = sin(uv.x * 20.0 + t * 4.0)
                      * sin(uv.y * 20.0 + t * 2.5);
         energy = smoothstep(0.85, 1.0, energy);
-        color += vec3(0.165, 0.322, 0.596) * energy * line * 0.6;
+        color += vec3(0.2, 0.9, 0.5) * energy * line * 0.6;
 
-        // alpha bem reduzido — sutil sobre fundo branco
-        float alpha = (line * pulse + energy * line * 0.3) * 0.10;
+        // alpha sutil sobre fundo escuro
+        float alpha = (line * pulse + energy * line * 0.3) * 0.12;
         alpha += random(uv + t * 0.05) * 0.008; // noise mínimo
 
         gl_FragColor = vec4(color, alpha);
@@ -92,6 +92,8 @@ export function CyberneticGridShader() {
       uniforms.iResolution.value.set(w, h);
     };
 
+    const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
     const onMouseMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
       uniforms.iMouse.value.set(
@@ -101,17 +103,29 @@ export function CyberneticGridShader() {
     };
 
     window.addEventListener('resize', onResize);
-    window.addEventListener('mousemove', onMouseMove);
+    if (!isTouch) window.addEventListener('mousemove', onMouseMove);
     onResize();
 
     renderer.setAnimationLoop(() => {
-      uniforms.iTime.value = clock.getElapsedTime();
+      const t = clock.getElapsedTime();
+      uniforms.iTime.value = t;
+
+      // No mobile: simula movimento automático lento do "mouse"
+      if (isTouch) {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        // Trajetória de Lissajous lenta — percorre a tela suavemente
+        const x = (Math.sin(t * 0.18) * 0.4 + 0.5) * w;
+        const y = (Math.sin(t * 0.11 + 1.2) * 0.4 + 0.5) * h;
+        uniforms.iMouse.value.set(x, y);
+      }
+
       renderer.render(scene, camera);
     });
 
     return () => {
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('mousemove', onMouseMove);
+      if (!isTouch) window.removeEventListener('mousemove', onMouseMove);
       renderer.setAnimationLoop(null);
       const canvas = renderer.domElement;
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
