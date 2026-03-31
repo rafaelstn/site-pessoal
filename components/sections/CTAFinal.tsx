@@ -1,13 +1,76 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const WHATSAPP_LINK =
   "https://wa.me/5511985529546?text=Olá%20Rafael%2C%20gostaria%20de%20saber%20mais%20sobre%20seus%20serviços%20de%20automação%20com%20IA.";
 
+const INPUT_CLASS =
+  "w-full bg-white/[0.05] border rounded-lg px-4 py-3 text-sm text-white placeholder:text-ink-subtle mb-3 outline-none transition-colors";
+
 export function CTAFinal() {
+  const [form, setForm] = useState({
+    nome: "",
+    empresa: "",
+    email: "",
+    problema: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  function validate() {
+    const newErrors: Record<string, string> = {};
+
+    if (!form.nome.trim()) newErrors.nome = "Informe seu nome";
+    if (!form.email.trim()) {
+      newErrors.email = "Informe seu email";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = "Email inválido";
+    }
+    if (!form.problema.trim()) newErrors.problema = "Descreva seu problema";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setForm({ nome: "", empresa: "", email: "", problema: "" });
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  function handleChange(field: string, value: string) {
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next[field];
+        return next;
+      });
+    }
+  }
+
   return (
-    <section className="relative py-28 md:py-36 bg-surface overflow-hidden">
+    <section className="relative py-20 md:py-28 lg:py-36 bg-surface overflow-hidden">
       {/* Glow verde */}
       <div
         className="absolute bottom-[-40px] left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none"
@@ -24,7 +87,7 @@ export function CTAFinal() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-4"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-4"
         >
           Quanto custa mais um mês fazendo isso na mão?
         </motion.h2>
@@ -50,7 +113,7 @@ export function CTAFinal() {
             href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-accent hover:bg-accent-dark transition-colors rounded-xl p-10 text-center flex flex-col items-center justify-center"
+            className="bg-accent hover:bg-accent-dark transition-colors rounded-xl p-6 sm:p-10 text-center flex flex-col items-center justify-center"
           >
             <svg
               className="w-10 h-10 text-black mb-4"
@@ -67,38 +130,88 @@ export function CTAFinal() {
 
           {/* Form card */}
           <form
-            className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-8"
-            onSubmit={(e) => e.preventDefault()}
+            className="bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 sm:p-8"
+            onSubmit={handleSubmit}
+            noValidate
           >
             <h3 className="text-white text-base font-medium mb-5">
               Ou deixe seus dados
             </h3>
-            <input
-              type="text"
-              placeholder="Seu nome"
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder:text-ink-subtle mb-3 outline-none focus:border-accent/40 transition-colors"
-            />
-            <input
-              type="text"
-              placeholder="Sua empresa"
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder:text-ink-subtle mb-3 outline-none focus:border-accent/40 transition-colors"
-            />
-            <input
-              type="email"
-              placeholder="Seu melhor email"
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder:text-ink-subtle mb-3 outline-none focus:border-accent/40 transition-colors"
-            />
-            <input
-              type="text"
-              placeholder="Qual problema quer resolver?"
-              className="w-full bg-white/[0.05] border border-white/[0.08] rounded-lg px-4 py-3 text-sm text-white placeholder:text-ink-subtle mb-5 outline-none focus:border-accent/40 transition-colors"
-            />
-            <button
-              type="submit"
-              className="w-full bg-white text-surface font-semibold text-sm py-3 rounded-lg hover:bg-white/90 transition-colors"
-            >
-              Enviar
-            </button>
+
+            {status === "success" ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-white font-medium mb-1">Mensagem enviada!</p>
+                <p className="text-ink-subtle text-sm">Respondo em até 48h.</p>
+              </div>
+            ) : (
+              <>
+                <div className="mb-3">
+                  <input
+                    type="text"
+                    placeholder="Seu nome *"
+                    value={form.nome}
+                    onChange={(e) => handleChange("nome", e.target.value)}
+                    className={`${INPUT_CLASS} ${errors.nome ? "border-red-500/60" : "border-white/[0.08] focus:border-accent/40"}`}
+                  />
+                  {errors.nome && (
+                    <p className="text-red-400 text-xs -mt-2 mb-2">{errors.nome}</p>
+                  )}
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Sua empresa"
+                  value={form.empresa}
+                  onChange={(e) => handleChange("empresa", e.target.value)}
+                  className={`${INPUT_CLASS} border-white/[0.08] focus:border-accent/40`}
+                />
+
+                <div className="mb-3">
+                  <input
+                    type="email"
+                    placeholder="Seu melhor email *"
+                    value={form.email}
+                    onChange={(e) => handleChange("email", e.target.value)}
+                    className={`${INPUT_CLASS} ${errors.email ? "border-red-500/60" : "border-white/[0.08] focus:border-accent/40"}`}
+                  />
+                  {errors.email && (
+                    <p className="text-red-400 text-xs -mt-2 mb-2">{errors.email}</p>
+                  )}
+                </div>
+
+                <div className="mb-5">
+                  <input
+                    type="text"
+                    placeholder="Qual problema quer resolver? *"
+                    value={form.problema}
+                    onChange={(e) => handleChange("problema", e.target.value)}
+                    className={`${INPUT_CLASS} ${errors.problema ? "border-red-500/60" : "border-white/[0.08] focus:border-accent/40"}`}
+                  />
+                  {errors.problema && (
+                    <p className="text-red-400 text-xs -mt-2 mb-2">{errors.problema}</p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="w-full bg-white text-surface font-semibold text-sm py-3 rounded-lg hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === "loading" ? "Enviando..." : "Enviar"}
+                </button>
+
+                {status === "error" && (
+                  <p className="text-red-400 text-xs mt-3 text-center">
+                    Erro ao enviar. Tente novamente ou fale no WhatsApp.
+                  </p>
+                )}
+              </>
+            )}
           </form>
         </motion.div>
       </div>

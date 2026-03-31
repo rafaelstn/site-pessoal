@@ -22,7 +22,7 @@ const steps = [
 
 export function ComoFunciona() {
   return (
-    <section className="py-28 md:py-36 bg-surface-lighter">
+    <section className="py-20 md:py-28 lg:py-36 bg-surface-lighter">
       <div className="container-main">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,7 @@ export function ComoFunciona() {
               transition={{ duration: 0.5, delay: i * 0.15 }}
               className="text-center"
             >
-              <div className="text-5xl md:text-6xl font-light text-accent/20 font-mono mb-4">
+              <div className="text-4xl md:text-5xl lg:text-6xl font-light text-accent/20 font-mono mb-4">
                 {step.number}
               </div>
               <h3 className="text-white text-lg font-medium mb-3">

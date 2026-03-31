@@ -5,14 +5,14 @@ import Image from "next/image";
 
 export function Portfolio() {
   return (
-    <section id="projetos" className="py-28 md:py-36 bg-surface bg-grain">
+    <section id="projetos" className="py-20 md:py-28 lg:py-36 bg-surface bg-grain">
       <div className="container-main">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-14 md:mb-20"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-10 md:mb-14 lg:mb-20"
         >
           O que já foi entregue
         </motion.h2>
@@ -26,7 +26,7 @@ export function Portfolio() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6 }}
             whileHover={{ y: -4 }}
-            className="rounded-xl border border-accent/[0.15] p-8 md:p-10 h-full"
+            className="rounded-xl border border-accent/[0.15] p-5 sm:p-8 md:p-10 h-full"
             style={{
               background:
                 "linear-gradient(135deg, rgba(34,197,94,0.05) 0%, rgba(255,255,255,0.02) 100%)",
@@ -93,7 +93,7 @@ export function Portfolio() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
             whileHover={{ y: -4 }}
-            className="rounded-xl border border-white/[0.06] p-8 md:p-10 h-full bg-white/[0.02]"
+            className="rounded-xl border border-white/[0.06] p-5 sm:p-8 md:p-10 h-full bg-white/[0.02]"
           >
             <div className="flex flex-col h-full">
               <span className="font-mono text-xs text-accent font-medium block mb-4">
@@ -228,7 +228,7 @@ export function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-8 md:p-10"
+          className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-8 md:p-10"
         >
           <div className="flex flex-col md:flex-row justify-between items-start gap-8">
             <div className="flex-1">
@@ -254,7 +254,7 @@ export function Portfolio() {
                 ))}
               </div>
             </div>
-            <div className="flex gap-4 shrink-0">
+            <div className="flex gap-4 shrink-0 flex-wrap sm:flex-nowrap">
               <div className="bg-accent/[0.08] px-6 py-5 rounded-lg text-center">
                 <div className="text-2xl font-medium text-accent font-mono">
                   R$ 2,4M

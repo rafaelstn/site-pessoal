@@ -31,14 +31,14 @@ const services = [
 
 export function Solucao() {
   return (
-    <section className="py-28 md:py-36 bg-surface-lighter bg-grain">
+    <section className="py-20 md:py-28 lg:py-36 bg-surface-lighter bg-grain">
       <div className="container-main">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-14 md:mb-20"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-10 md:mb-14 lg:mb-20"
         >
           O que eu faço
         </motion.h2>
@@ -65,7 +65,7 @@ export function Solucao() {
                     {service.title}
                   </h3>
                 </div>
-                <p className="text-ink-muted text-[15px] md:text-base leading-relaxed pl-10 md:pl-12 max-w-2xl">
+                <p className="text-ink-muted text-[15px] md:text-base leading-relaxed pl-0 sm:pl-10 md:pl-12 max-w-2xl mt-1 sm:mt-0">
                   {service.description}
                 </p>
               </div>

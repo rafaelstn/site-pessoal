@@ -13,7 +13,7 @@ const highlights = [
 
 export function Sobre() {
   return (
-    <section className="py-28 md:py-36 bg-surface-light overflow-hidden">
+    <section className="py-20 md:py-28 lg:py-36 bg-surface-light overflow-hidden">
       <div className="container-main">
         <div className="grid grid-cols-1 lg:grid-cols-[45%_1fr] gap-10 lg:gap-16 items-center">
           {/* Foto */}
@@ -24,7 +24,7 @@ export function Sobre() {
             transition={{ duration: 0.7 }}
             className="relative lg:-ml-10 mb-8 lg:mb-0"
           >
-            <div className="aspect-[4/5] rounded-xl overflow-hidden max-w-[420px] lg:max-w-none ring-1 ring-white/[0.06]">
+            <div className="aspect-[4/5] rounded-xl overflow-hidden max-w-[420px] mx-auto lg:max-w-none ring-1 ring-white/[0.06]">
               <Image
                 src="/rafael-perfil.png"
                 alt="Rafael Damasceno"

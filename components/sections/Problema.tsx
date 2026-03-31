@@ -23,7 +23,7 @@ const problems = [
 
 export function Problema() {
   return (
-    <section className="relative py-28 md:py-36 bg-surface bg-grain">
+    <section className="relative py-20 md:py-28 lg:py-36 bg-surface bg-grain">
       {/* Glow quente no canto */}
       <div
         className="absolute top-0 right-0 w-[400px] h-[300px] pointer-events-none"
@@ -40,7 +40,7 @@ export function Problema() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
-          className="font-display text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-14 md:mb-20 max-w-[550px]"
+          className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-light leading-tight tracking-[-1.5px] mb-10 md:mb-14 lg:mb-20 max-w-[550px]"
         >
           Quanto custa{" "}
           <span className="text-warm">não automatizar?</span>
